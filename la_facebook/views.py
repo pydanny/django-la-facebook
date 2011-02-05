@@ -2,8 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from facebook_access.access import OAuthAccess
-from facebook_access.exceptions import MissingToken
+from la_facebook.access import OAuthAccess
+from la_facebook.exceptions import MissingToken
 
 
 def facebook_login(request, service,
@@ -39,4 +39,3 @@ def facebook_callback(request, service):
 def finish_signup(request, service):
     access = OAuthAccess(service)
     return access.callback.finish_signup(request, service)
-        
