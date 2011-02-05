@@ -1,4 +1,11 @@
 # Django settings for fb_la_test project.
+import sys, os
+
+# We need the project's root in our Python Path. Let's add it
+test_project = os.path.dirname(__file__)
+test_directory = os.path.dirname(test_project)
+main_project = os.path.dirname(test_directory)
+sys.path.append(main_project)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
