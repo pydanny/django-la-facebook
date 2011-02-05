@@ -10,9 +10,9 @@ setup(
     license = "BSD",
     url = "http://github.com/pydanny/django-la-facebook",
     packages = [
-        "oauth_access",
-        "oauth_access.templatetags",
-        "oauth_access.utils",
+        "la_facebook",
+        "la_facebook.templatetags",
+        "la_facebook.utils",
     ],
     classifiers = [
         "Development Status :: 3 - Alpha",

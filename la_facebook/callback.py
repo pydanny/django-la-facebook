@@ -46,13 +46,13 @@ class Callback(object):
 class AuthenticationCallback(Callback):
     
     def handle_no_user(self, request, access, token, user_data):
-        request.session["oauth_signup_data"] = {
+        request.session["fb_data"] = {
             "token": token,
             "user_data": user_data,
         }
         return redirect(
             reverse(
-                "oauth_access_finish_signup", kwargs={
+                "fb_finish_signup", kwargs={
                     "service": access.service
                 }
             )

@@ -21,7 +21,7 @@ from la_facebook.utils.anyetree import etree
 from la_facebook.utils.loader import load_path_attr
 
 
-logger = logging.getLogger("oauth_access.access")
+logger = logging.getLogger("la_facebook.access")
 
 
 class UnknownResponse(Exception):
@@ -112,7 +112,7 @@ class OAuthAccess(object):
         current_site = Site.objects.get(pk=settings.SITE_ID)
         # @@@ http fix
         base_url = "http://%s" % current_site.domain
-        callback_url = reverse("oauth_access_callback", kwargs={
+        callback_url = reverse("fb_callback", kwargs={
             "service": self.service,
         })
         return "%s%s" % (base_url, callback_url)

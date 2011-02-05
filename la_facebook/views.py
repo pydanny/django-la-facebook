@@ -33,7 +33,7 @@ def facebook_callback(request, service):
         else:
             # @@@ not nice for OAuth 2
             ctx.update({"error": "token_mismatch"})
-    return render_to_response("oauth_access/oauth_error.html", ctx)
+    return render_to_response("la_facebook/fb_error.html", ctx)
 
 
 def finish_signup(request, service):
