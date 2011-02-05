@@ -52,9 +52,7 @@ class AuthenticationCallback(Callback):
         }
         return redirect(
             reverse(
-                "fb_finish_signup", kwargs={
-                    "service": access.service
-                }
+                "fb_finish_signup"
             )
         )
     

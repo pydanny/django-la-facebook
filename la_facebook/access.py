@@ -34,8 +34,7 @@ class ServiceFail(Exception):
 
 class OAuthAccess(object):
     
-    def __init__(self, service):
-        self.service = service
+    def __init__(self):
         self.signature_method = oauth.SignatureMethod_HMAC_SHA1()
         self.consumer = oauth.Consumer(self.key, self.secret)
     
@@ -67,20 +66,17 @@ class OAuthAccess(object):
             return None
     
     def _obtain_setting(self, k1, k2):
-        name = "OAUTH_ACCESS_SETTINGS"
-        service = self.service
+        name = "FACEBOOK_ACCESS_SETTINGS"
         try:
-            return getattr(settings, name)[service][k1][k2]
+            return getattr(settings, name)[k1][k2]
         except AttributeError:
             raise ImproperlyConfigured("%s must be defined in settings" % (name,))
         except KeyError, e:
             key = e.args[0]
-            if key == service:
-                raise ImproperlyConfigured("%s must contain '%s'" % (name, service))
-            elif key == k1:
-                raise ImproperlyConfigured("%s must contain '%s' for '%s'" % (name, k1, service))
+            if key == k1:
+                raise ImproperlyConfigured("%s must contain '%s'" % (name, k1))
             elif key == k2:
-                raise ImproperlyConfigured("%s must contain '%s' for '%s' in '%s'" % (name, k2, k1, service))
+                raise ImproperlyConfigured("%s must contain '%s' for '%s'" % (name, k2, k1))
             else:
                 raise
     
@@ -112,9 +108,7 @@ class OAuthAccess(object):
         current_site = Site.objects.get(pk=settings.SITE_ID)
         # @@@ http fix
         base_url = "http://%s" % current_site.domain
-        callback_url = reverse("fb_callback", kwargs={
-            "service": self.service,
-        })
+        callback_url = reverse("fb_callback")
         return "%s%s" % (base_url, callback_url)
     
     def authorized_token(self, token, verifier=None):
@@ -138,8 +132,6 @@ class OAuthAccess(object):
         return oauth.Token.from_string(content)
     
     def check_token(self, unauth_token, parameters):
-        if self.service != "facebook" and unauth_token is None:
-            raise MissingToken
         if unauth_token:
             token = oauth.Token.from_string(unauth_token)
             if token.key == parameters.get("oauth_token", "no_token"):
@@ -204,7 +196,6 @@ class OAuthAccess(object):
             defaults["identifier"] = identifier
         assoc, created = UserAssociation.objects.get_or_create(
             user = user,
-            service = self.service,
             defaults = defaults,
         )
         if not created:
@@ -215,7 +206,6 @@ class OAuthAccess(object):
     def lookup_user(self, identifier):
         queryset = UserAssociation.objects.all()
         queryset = queryset.select_related("user")
-        queryset = queryset.filter(service=self.service)
         try:
             assoc = queryset.get(identifier=identifier)
         except UserAssociation.DoesNotExist:
