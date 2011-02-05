@@ -7,10 +7,10 @@ register = template.Library()
 
 
 @register.filter
-def authed_via(user, service):
+def authed_via(user):
     if user.is_authenticated():
         try:
-            assoc = UserAssociation.objects.get(user=user, service=service)
+            assoc = UserAssociation.objects.get(user=user)
         except UserAssociation.DoesNotExist:
             return False
         return assoc.expired()

@@ -2,7 +2,7 @@ from django.conf import settings
 
 from django.contrib.auth.models import User
 
-from oauth_access.callback import AuthenticationCallback
+from la_facebook.callback import AuthenticationCallback
 
 from blarg.profiles.models import Profile
 
