@@ -1,0 +1,3 @@
+oauth2
+PIL
+django==1.2.4
