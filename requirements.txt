@@ -1,3 +1,2 @@
-oauth2
-PIL
+oauth2==1.5.163
 django==1.2.4
