@@ -4,13 +4,11 @@
 	<title>This is a test</title>
 </head>
 <body>
-    
-    <h1>Results page</h1>
-    {% if code == None %}
-        <p>Login Failure</p>
-    {% else %}
-       <p> Login Success</p>
-    {% endif %}
-	<p>Your code is: {{ code }}</p>
+
+	{% if error %}
+	Your Error is: {{ error }}
+	{% else %}
+		Your name is {{ name }}
+	{% endif %}
 </body>
 </html>

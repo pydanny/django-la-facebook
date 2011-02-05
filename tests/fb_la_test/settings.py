@@ -92,6 +92,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -104,6 +105,8 @@ FACEBOOK_APP_ID = '124397597633470'
 FACEBOOK_API_KEY = '0d6acba060823bac2f93708d98d7e74a'
 FACEBOOK_APP_SECRET = 'cdd60917e6a30548b933ba91c48289bc'
 
+
+
 FACEBOOK_ACCESS_SETTINGS = {
     "keys": {
         "KEY": FACEBOOK_APP_ID,
@@ -114,7 +117,7 @@ FACEBOOK_ACCESS_SETTINGS = {
         "access_token": "https://graph.facebook.com/oauth/access_token",
         "authorize": "https://graph.facebook.com/oauth/authorize",
         # Will need to redo the following
-        "callback": "la_facebook.oauth.facebook_callback",
+        "callback": "fb_la_test.oauth.facebook_callback",
         # Probably too much power here - just need to have authentication
         "provider_scope": ["publish_stream"],
     }

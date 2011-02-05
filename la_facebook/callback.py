@@ -52,7 +52,7 @@ class AuthenticationCallback(Callback):
         }
         return redirect(
             reverse(
-                "fb_finish_signup"
+                "la_facebook_finish_signup"
             )
         )
     
@@ -62,3 +62,10 @@ class AuthenticationCallback(Callback):
     def login_user(self, request, user):
         user.backend = "django.contrib.auth.backends.ModelBackend"
         login(request, user)
+    
+    def redirect_url(self, request, redirect_to_session_key="redirect_to"):
+        return "/after"
+        '''
+        if hasattr(request, "session"):
+              request.session[redirect_to_session_key]
+        '''

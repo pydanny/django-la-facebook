@@ -8,6 +8,7 @@ except ImportError:
 
 def load_path_attr(path):
     i = path.rfind(".")
+    print path
     module, attr = path[:i], path[i+1:]
     try:
         mod = import_module(module)
@@ -15,6 +16,6 @@ def load_path_attr(path):
         raise ImproperlyConfigured("Error importing %s: '%s'" % (module, e))
     try:
         attr = getattr(mod, attr)
-    except AttributeError:
-        raise ImproperlyConfigured("Module '%s' does not define a '%s'" % (module, attr))
+    except AttributeError, e:
+        raise ImproperlyConfigured("Module '%s' does not define a '%s %s'" % (module, attr, e))
     return attr
