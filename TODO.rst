@@ -7,16 +7,17 @@ TODO
 #. Attempt to write client unit tests
 #. remove oauth_access from our dirextory
 #. Dynamic profiles integration (if profile model is there, try to fill in field intelligently)
+#. Simplification of generic oauth code to make it easier to modify for future facebook changes
 
 Docs 
 ----
 
-#. Philosophy
-#. Credits to django-oauth-acces
-#. Simplification of generic oauth code to make it easier to modify for future facebook changes
-#. Usage
+#. docs/philosophy.txt
+#. docs/credits (django-oauth-acces and eldarion)
+#. docs/usage.txt
+#. docs/test_project.txt (running the test project)
 #. access
 #. callbacks
 #. exceptions
+#. our settings
 #. views
-#. Running the test project
