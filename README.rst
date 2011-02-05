@@ -34,3 +34,4 @@ Add the following to your settings::
 
 Add ``url(r"^la_facebook/", include("la_facebook.urls"))`` to your root urlconf.
 
+Note: While using the test app `fb_la_test` you must use "http://localhost:8000" as your url, NOT 127.0.0.1. Facebook throws a wobbly when you try and use an IP address
