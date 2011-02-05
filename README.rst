@@ -3,7 +3,13 @@ README
 ===========
 
 
-Add ``la_facebook`` to ``settings.INSTALLED_APPS``
+Add ``la_facebook`` to ``settings.INSTALLED_APPS``::
+
+    settings.INSTALLED_APPS = (
+        'django.contrib.admin',
+        'la_facebook',
+        ...
+    )
 
 Add the following to your settings::
 
