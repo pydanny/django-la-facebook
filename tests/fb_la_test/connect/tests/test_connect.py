@@ -37,6 +37,25 @@ class TestConnection(LaFacebookTestCase):
         form_data = dict(
             charset_test="€,´,€,´,水,Д,Є",
             lsd="t9rTc"
+
+            charset_test="&euro;,&acute;,€,´,水,Д,Є",
+            lsd="IuLli",
+            next="http://www.facebook.com/connect/uiserver.php?method=permissions.request&amp;app_id=124397597633470&amp;display=page&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fafter&amp;response_type=code&amp;fbconnect=1&amp;perms=email%2Cread_stream&amp;from_login=1",
+            api_key="124397597633470",
+            return_session="0",
+            cancel_url="http://localhost:8000/after?error_reason=user_denied&amp;error=access_denied&amp;error_description=The+user+denied+your+request.",
+            legacy_return="1",
+            display="page",
+            session_key_only="0",
+            skip_api_login="1",
+            trynum="1",
+            charset_test="&euro;,&acute;,€,´,水,Д,Є",
+            lsd="IuLli",
+            email="",
+            pass="",
+            persistent="1",
+            default_persistent="0",
+            Login="login"
         )
 
         
@@ -44,5 +63,3 @@ class TestConnection(LaFacebookTestCase):
         
     def test_authentication_after_facebook_authentication(self):
         pass
-        
-        
