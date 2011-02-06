@@ -5,15 +5,15 @@ Credits
 django-la-facebook team
 -----------------------
 
-Alexandros Bantis
-Daniel Greenfeld
-David Peters
-Jacob Burch
+* Alexandros Bantis
+* Daniel Greenfeld
+* David Peters
+* Jacob Burch
 
 django-oauth-access team
 ------------------------
 
-*A lot of the core code of this project was liberally lifted from django-oauth-access*
+*A lot of the core code of this project was liberally lifted from django-oauth-access*. We want to extend all gratitude and thanks to the guys who made that excellent project.
 
-Brian Rosner
-Patrick Altman
+* Brian Rosner
+* Patrick Altman

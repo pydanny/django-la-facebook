@@ -2,42 +2,39 @@
 README
 ===========
 
+Dedicated facebook authentication for Django that does it via the backend and not javascript. Has lots of tests and a trivial-to-setup test project with working code.
 
-Add ``la_facebook`` to ``settings.INSTALLED_APPS``::
+The blog entry that started it all:
 
-    settings.INSTALLED_APPS = (
-        'django.contrib.admin',
+    http://pydanny.blogspot.com/2011/01/what-i-want-for-django-facebook-connect.html
+
+Full Documentation:
+
+    http://django-la-facebook.readthedocs.org/en/latest/index.html
+
+Usage
+-----
+
+*Note: still in process of writing this down*
+
+Get ``django-la-facebook`` into your python path::
+
+    pip install django-la-facebook
+    
+Add ``la_facebook`` to your INSTALLED_APPS in settings.py::
+
+    INSTALLED_APPS = (
+        ...
         'la_facebook',
         ...
+        )
+    
+Add ``la_facebook`` to your root urlconf (urls.py)::
+
+    urlpatterns = patterns('',
+        ...,
+        url(r"^la_facebook/", include("la_facebook.urls")),
+        ...,        
     )
 
-Add the following to your settings::
-
-    # to obtain these visit http://developers.facebook.com/setup/
-    
-    # DOUBLE CHECK THESE please!!!
-    FACEBOOK_APP_ID = '124397597633470'
-    FACEBOOK_API_KEY = '0d6acba060823bac2f93708d98d7e74a'
-    FACEBOOK_APP_SECRET = 'cdd60917e6a30548b933ba91c48289bc'
-    OAUTH_ACCESS_SETTINGS = {
-        "facebook": {
-            "keys": {
-                "KEY": FACEBOOK_APP_ID,
-                "SECRET": FACEBOOK_APP_SECRET,
-            },
-            "endpoints": {
-                # OAuth 2.0 does not need a request token
-                "access_token": "https://graph.facebook.com/oauth/access_token",
-                "authorize": "https://graph.facebook.com/oauth/authorize",
-                # Will need to redo the following
-                "callback": "la_facebook.oauth.facebook_callback",
-                # Probably too much power here - just need to have authentication
-                "provider_scope": ["publish_stream"],            
-            }
-        }
-    }
-
-
-Add ``url(r"^la_facebook/", include("la_facebook.urls"))`` to your root urlconf.
-
-Note: While using the test app `fb_la_test` you must use "http://localhost:8000" as your url, NOT 127.0.0.1. Facebook throws a wobbly when you try and use an IP address
+TODO: add in the template wiring instructions
