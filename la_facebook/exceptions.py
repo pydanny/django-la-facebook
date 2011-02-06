@@ -11,9 +11,10 @@ class FacebookSettingsKeyError(KeyError):
             "callback": "fb_la_test.oauth.facebook_callback",
             # Probably too much power here - just need to have authentication
         }
-    }  
-    """ 
-    pass    
+    }
+    """
+    pass
+
 
 class NotAuthorized(Exception):
     pass
@@ -21,7 +22,6 @@ class NotAuthorized(Exception):
 
 class MissingToken(Exception):
     pass
-    
 
 
 class UnknownResponse(Exception):
@@ -30,4 +30,3 @@ class UnknownResponse(Exception):
 
 class ServiceFail(Exception):
     pass
-    
