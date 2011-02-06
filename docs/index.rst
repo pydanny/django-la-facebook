@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
    
    usage
-   test_project
+   test_project   
    background
    goals
    credits
