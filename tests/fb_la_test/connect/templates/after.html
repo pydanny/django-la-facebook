@@ -5,10 +5,14 @@
 </head>
 <body>
 
-	{% if error %}
-	Your Error is: {{ error }}
+	{% if user %}
+		{% if profile %}
+			Your name is {{ profile.name }}. You're all about {{ profile.bio }}
+		{% else %}
+			You're logged in as {{ user.username }}, but you don't seem to have a profile.
+		{% endif %}
 	{% else %}
-		Your name is {{ name }}
+		You don't seem to be logged in =(
 	{% endif %}
 </body>
 </html>
