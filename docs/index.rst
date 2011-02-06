@@ -17,6 +17,21 @@ Contents:
    goals
    credits
    TODO
+   
+External Links
+===============
+
+Project homepage: 
+
+    https://github.com/pydanny/django-la-facebook
+
+PyPI:
+    
+    http://pypi.python.org/pypi/django-la-facebook
+
+Django Packages:
+
+    http://djangopackages.com/packages/p/django-la-facebook/
 
 Indices and tables
 ==================
