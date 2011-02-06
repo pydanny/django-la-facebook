@@ -50,7 +50,7 @@ def facebook_callback(request):
         else:
             # @@@ not nice for OAuth 2
             ctx.update({"error": "token_mismatch"})
-            logger.error('Mismathch Token')
+            logger.error('Mismatch Token')
     return render_to_response("la_facebook/fb_error.html", ctx)
 
 
