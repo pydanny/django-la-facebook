@@ -15,21 +15,16 @@ from django.contrib.sites.models import Site
 
 import oauth2 as oauth
 
-from la_facebook.exceptions import NotAuthorized, MissingToken
+from la_facebook.exceptions import (
+                    NotAuthorized, MissingToken, UnknownResponse, 
+                    ServiceFail, FacebookSettingsKeyError
+                    )
 from la_facebook.models import UserAssociation
 from la_facebook.utils.anyetree import etree
 from la_facebook.utils.loader import load_path_attr
 
 
 logger = logging.getLogger("la_facebook.access")
-
-
-class UnknownResponse(Exception):
-    pass
-
-
-class ServiceFail(Exception):
-    pass
 
 
 class OAuthAccess(object):
