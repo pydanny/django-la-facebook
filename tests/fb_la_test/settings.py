@@ -114,9 +114,6 @@ FACEBOOK_ACCESS_SETTINGS = {
         "SECRET": FACEBOOK_APP_SECRET,
     },
     "endpoints": {
-        # OAuth 2.0 does not need a request token
-        "access_token": "https://graph.facebook.com/oauth/access_token",
-        "authorize": "https://graph.facebook.com/oauth/authorize",
         # Will need to redo the following
         "callback": "fb_la_test.oauth.facebook_callback",
         # Probably too much power here - just need to have authentication
