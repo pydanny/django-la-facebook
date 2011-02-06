@@ -4,9 +4,8 @@ Settings
 
 This document describes the settings needed by la_facebook.
 
-FACEBOOK_ACCESS_SETTINGS this is the only setting required. It is a dicitonary
+FACEBOOK_ACCESS_SETTINGS this is the only setting required. It is a dictionary
 of app specific settings as follows:
-
 
 FACEBOOK_APP_ID - this is a key that uniquely identifies your Facebook app, in
 the common case, the Facebook app will be your project or site.  
@@ -20,3 +19,13 @@ value is "la_facebook.callbacks.default.default_facebook_callback"
 
 PROVIDER_SCOPE (optional) - a comma delimited string of permissions to ask for.
 The list of these is `here <http://developers.facebook.com/docs/authentication/permissions/>`
+
+Example::
+    
+    FACEBOOK_ACCESS_SETTINGS = {
+            "FACEBOOK_APP_ID": FACEBOOK_APP_ID,
+            "FACEBOOK_APP_SECRET": FACEBOOK_APP_SECRET,
+            # The following keys are optional
+            # "CALLBACK": "la_facebook.callbacks.default.default_facebook_callback",
+            # "PROVIDER_SCOPE": "email,read_stream" # here as sample - optional
+    }

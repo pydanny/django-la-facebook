@@ -10,6 +10,11 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+   
+   usage   
+   philosophy
+   test_project
+   credits   
 
 Indices and tables
 ==================

@@ -1,6 +1,6 @@
-==========
-Philosophy
-==========
+=====
+Goals
+=====
 
 Security is HARD.
 Security is DANGEROUS.
