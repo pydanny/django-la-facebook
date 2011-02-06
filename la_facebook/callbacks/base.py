@@ -62,54 +62,28 @@ class BaseFacebookCallback(object):
         return redirect(redirect_to)
     
     def fetch_user_data(self, request, access, token):
-        url = FACEBOOK_GRAPH_TARGET
-        return access.make_api_call("json", url, token)
+        raise NotImplementedError("Callbacks must have a fetch_user_data method")
     
     def lookup_user(self, request, access, user_data):
-        return access.lookup_user(identifier=self.identifier_from_data(user_data))
+        raise NotImplementedError("Callbacks must have a lookup_user method")
     
     def redirect_url(self, request):
-        return get_default_redirect(request)
+        raise NotImplementedError("Callbacks must have a redirect_url method")
 
     def handle_no_user(self, request, access, token, user_data):
-        return self.create_user(request, access, token, user_data)
+        raise NotImplementedError("Callbacks must have a handle_no_user method")
 
     def handle_unauthenticated_user(self, request, user, access, token, user_data):
-        self.login_user(request, user)
+        raise NotImplementedError("Callbacks must have a handle_unauthenticated_user method")
         
     def update_profile_from_graph(self, request, access, token, profile):
-        user_data = self.fetch_user_data(request, access, token)
-        for k, v in user_data.items():
-            if k !='id' and hasattr(profile, k):
-                setattr(profile, k, v)
-        return profile 
+        raise NotImplementedError("Callbacks must have a update_profile_from_graph method")
+        
+    def create_profile(self, request, access, token, user):
+        raise NotImplementedError("Callbacks must have a create_profile method")               
            
     def create_user(self, request, access, token, user_data):
-        identifier = self.identifier_from_data(user_data)
-        username = str(identifier)
-        if User.objects.filter(username=username).count():
-            user = User.objects.get(username=username)
-        else:
-            user = User(username=str(identifier))
-            user.set_unusable_password()
-            user.save()
-
-        if hasattr(settings, 'AUTH_PROFILE_MODULE'):
-            profile_model = get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
-
-            profile, created = profile_model.objects.get_or_create(
-              user = user,
-            )
-            profile = self.update_profile_from_graph(request, access, token, profile)
-            profile.save()
-
-        else:
-            # Do nothing because users have no site profile defined
-            # TODO - should we pass a warning message? Raise a SiteProfileNotAvailable error?
-            pass                         
-
-        self.login_user(request, user)
-        return user         
+        raise NotImplementedError("Callbacks must have a create_user method")       
       
     def identifier_from_data(self, data):
         # @@@ currently this is being used to make/lookup users and we don't
