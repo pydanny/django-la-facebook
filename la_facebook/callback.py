@@ -81,7 +81,7 @@ class FacebookCallback(Callback):
     def update_profile_from_graph(self, request, access, token, profile):
            user_data = self.fetch_user_data(request, access, token)
            for k,v in user_data.items():
-               if hasattr(profile, k):
+               if k!='id' and hasattr(profile, k):
                    setattr(profile, k, v)
            return profile
 
@@ -100,14 +100,10 @@ class FacebookCallback(Callback):
        # start Profile handling code          
        if hasattr(settings, 'AUTH_PROFILE_MODULE'):
            profile_model = get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
-           try:
-               profile = user.get_profile()
-           except profile_model.DoesNotExist:
-               # TODO - provide base code for this to be extended by developer
-               # create the profile record here
-               profile = profile_model.objects.create(
-                   user = user,
-               )
+
+           profile, created = profile_model.objects.get_or_create(
+               user = user,
+           )
            profile = self.update_profile_from_graph(request, access, token, profile)
            profile.save()
 
