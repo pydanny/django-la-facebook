@@ -16,11 +16,17 @@ class PropertyTests(TestCase):
         oauth = OAuthAccess()
         self.assertEquals(oauth.secret, "cdd60917e6a30548b933ba91c48289bc")
     
-    def test_request_token_url_in_settings(self):
+    def test_access_token_url(self):
         oauth = OAuthAccess()
-        request_token_url = oauth.endpoints
-        request_endpoint_url = oauth.request_token
-        self.assertEquals(request_endpoint_url,request_token_url)
+        access_token_endpoint = oauth.access_token_url
+        expected_endpoints_url = "https://graph.facebook.com/oauth/access_token"
+        self.assertEquals(access_token_endpoint,expected_endpoints_url)
+    
+    def test_authorize_url(self):
+        oauth = OAuthAccess()
+        authorize_url_endpoint = oauth.authorize_url
+        expected_endpoint_url = "https://graph.facebook.com/oauth/authorize"
+        self.assertEquals(authorize_url_endpoint,expected_endpoint_url)
     
     def test_callback_url(self):
         oauth = OAuthAccess()
