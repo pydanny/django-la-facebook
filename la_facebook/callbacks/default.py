@@ -1,4 +1,4 @@
-from la_facebook.callbacks.base import BaseFacebookCallback
+from la_facebook.callbacks.base import BaseFacebookCallback, get_default_redirect
 
 class DefaultFacebookCallback(BaseFacebookCallback):
     
