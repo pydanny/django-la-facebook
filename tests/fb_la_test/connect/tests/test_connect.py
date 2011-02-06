@@ -35,9 +35,6 @@ class TestConnection(LaFacebookTestCase):
         print content      
         
         form_data = dict(
-            charset_test="€,´,€,´,水,Д,Є",
-            lsd="t9rTc"
-
             charset_test="&euro;,&acute;,€,´,水,Д,Є",
             lsd="IuLli",
             next="http://www.facebook.com/connect/uiserver.php?method=permissions.request&amp;app_id=124397597633470&amp;display=page&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fafter&amp;response_type=code&amp;fbconnect=1&amp;perms=email%2Cread_stream&amp;from_login=1",
