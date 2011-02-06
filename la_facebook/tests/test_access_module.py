@@ -11,7 +11,17 @@ class PropertyTests(TestCase):
         # test if there is a key
         oauth = OAuthAccess()
         self.assertEquals(oauth.key, "124397597633470")
-
+    
+    def test_secret_in_settings(self):
+        oauth = OAuthAccess()
+        self.assertEquals(oauth.secret, "cdd60917e6a30548b933ba91c48289bc")
+    
+    def test_request_token_url_in_settings(self):
+        oauth = OAuthAccess()
+        request_token_url = oauth.endpoints
+        request_endpoint_url = oauth.request_token
+        self.assertEquals(request_endpoint_url,request_token_url)
+    
     def test_callback_url(self):
         oauth = OAuthAccess()
         callback_url = oauth.callback_url
@@ -20,7 +30,7 @@ class PropertyTests(TestCase):
         reversed_url = reverse("la_facebook_callback")
         expected_url = "%s%s" % (base_url, reversed_url)
         self.assertEquals(callback_url,expected_url)
-
+    
     def test_callback(self):
         oauth = OAuthAccess()
         callback_endpoint = oauth.callback
