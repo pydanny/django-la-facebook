@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.db.models import get_model
 
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -97,8 +98,8 @@ class FacebookCallback(Callback):
        # start Profile handling code
        # start Profile handling code
        # start Profile handling code          
-       if hasattr(settings, settings.AUTH_PROFILE_MODULE):
-           profile_model = get_model(settings.AUTH_PROFILE_MODULE)
+       if hasattr(settings, 'AUTH_PROFILE_MODULE'):
+           profile_model = get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
            try:
                profile = user.get_profile()
            except profile_model.DoesNotExist:
@@ -111,6 +112,7 @@ class FacebookCallback(Callback):
            profile.save()
 
        else:
+           print "I Ain't making you a profile how about that"
            # Do nothing because users have no site profile defined
            # TODO - should we pass a warning message? Raise a SiteProfileNotAvailable error?
            pass
