@@ -240,6 +240,12 @@ class OAuthAccess(object):
         return load_path_attr(self._obtain_setting("endpoints", "callback"))
     
     def authorization_url(self, token=None):
+        """
+            authorization url
+            if token is none set OAuth params client id, url, set scope and rturn authorization url
+            else request consumer, token and authorization url
+            return request authorization url
+        """
         if token is None:
             # OAuth 2.0
             params = dict(
@@ -260,6 +266,12 @@ class OAuthAccess(object):
             return request.to_url()
     
     def persist(self, user, token, identifier=None):
+        """
+            set expiration
+            set defaults
+            set identifier if not none
+            if nothing was created save current associated defaults
+        """
         expires = hasattr(token, "expires") and token.expires or None
         defaults = {
             "token": str(token),
@@ -277,6 +289,13 @@ class OAuthAccess(object):
             assoc.save()
     
     def lookup_user(self, identifier):
+        """
+            query all users
+            query select user
+            try identify user
+            if user does not exist return none
+            else return user
+        """
         queryset = UserAssociation.objects.all()
         queryset = queryset.select_related("user")
         try:
