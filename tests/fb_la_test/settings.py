@@ -115,7 +115,7 @@ FACEBOOK_ACCESS_SETTINGS = {
     },
     "endpoints": {
         # Will need to redo the following
-        "callback": "la_facebook.callbacks.default.DefaultFacebookCallback",
+        "callback": "la_facebook.callbacks.default.default_facebook_callback",
         # Probably too much power here - just need to have authentication
     }
 }

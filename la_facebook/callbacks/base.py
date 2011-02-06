@@ -48,6 +48,8 @@ class BaseFacebookCallback(object):
             else:
                 ret = self.handle_unauthenticated_user(request, user, access, token, user_data)
             if isinstance(ret, HttpResponse):
+                print '1'
+                print self.__dict__                
                 return ret
         else:
             authenticated = True
@@ -58,6 +60,7 @@ class BaseFacebookCallback(object):
             if not authenticated:
                 kwargs["identifier"] = self.identifier_from_data(user_data)
             access.persist(user, token, **kwargs)
+
         return redirect(redirect_to)
     
     def fetch_user_data(self, request, access, token):
@@ -107,8 +110,8 @@ class BaseFacebookCallback(object):
             # TODO - should we pass a warning message? Raise a SiteProfileNotAvailable error?
             pass                         
 
-            self.login_user(request, user)
-            return user         
+        self.login_user(request, user)
+        return user         
       
     def identifier_from_data(self, data):
         # @@@ currently this is being used to make/lookup users and we don't
