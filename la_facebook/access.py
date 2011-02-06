@@ -43,9 +43,9 @@ class OAuthAccess(object):
         """
         
         try:
-            return self._obtain_setting("keys", "FACEBOOK_APP_ID")
+            return settings.FACEBOOK_ACCESS_SETTINGS["FACEBOOK_APP_ID"]
         except KeyError:
-        	raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID in the keys dict")
+            raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID entry")
     
     @property
     def secret(self):
@@ -53,74 +53,33 @@ class OAuthAccess(object):
             accessor for secret setting
         """
         try:
-        	return self._obtain_setting("keys", "FACEBOOK_APP_SECRET")
+            return settings.FACEBOOK_ACCESS_SETTINGS["FACEBOOK_APP_SECRET"]
         except KeyError:
-        	raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET in the keys dict")
-    
-    @property
-    # TODO:  OAuth 2.0 does not need a request token
-    # this func probably obsolete
-    def request_token_url(self):
-        """
-            accessor for request_token setting
-        """
-        
-        return self._obtain_setting("endpoints", "request_token")
-    
+            raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET entry")
     @property
     def access_token_url(self):
         """
             accessor for access_token setting
         """
-        
-        try:
-             return self._obtain_setting("endpoints", "access_token")
-        except KeyError:
-            return "https://graph.facebook.com/oauth/access_token"
+        return "https://graph.facebook.com/oauth/access_token"
     
     @property
     def authorize_url(self):
         """
             accessor for authorize setting
         """
-        
-        try:
-            return self._obtain_setting("endpoints", "authorize")
-        except KeyError:
-            return "https://graph.facebook.com/oauth/authorize"
-    
+        return "https://graph.facebook.com/oauth/authorize"
+
     @property
     def provider_scope(self):
         """
             accessor for provider scope setting
         """
-        
         try:
-            return self._obtain_setting("endpoints", "provider_scope")
+            return settings.FACEBOOK_ACCESS_SETTINGS["PROVIDER_SCOPE"]
         except KeyError:
             return None
-    
-    def _obtain_setting(self, k1, k2):
-        """
-            accessor and error checking for obtaining facebook acess setting
-        """
-        
-        name = "FACEBOOK_ACCESS_SETTINGS"
-        return getattr(settings, name)[k1][k2]        
-        """
-            TODO: Nuke this code?
-        try:
-            return getattr(settings, name)[k1][k2]        
-        except KeyError, e:
-            key = e.args[0]
-            if key == k1:
-                raise ImproperlyConfigured("%s must contain '%s'" % (name, k1))
-            elif key == k2:
-                raise ImproperlyConfigured("%s must contain '%s' for '%s'" % (name, k2, k1))
-            else:
-                raise
-        """
-    
+
     def unauthorized_token(self):
         """
             This function may handle when a user does not authorize the app to access their facebook information.
@@ -237,7 +196,11 @@ class OAuthAccess(object):
         """
             accessor for callback setting
         """
-        return load_path_attr(self._obtain_setting("endpoints", "callback"))
+        try:
+            callback_str = settings.FACEBOOK_ACCESS_SETTINGS["FACEBOOK_APP_SECRET"]
+        except KeyError:
+            raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a CALLBACK entry")
+        return load_path_attr(callback_str)
     
     def authorization_url(self, token=None):
         """

@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render_to_response
-from fb_la_test.connect.models import Profile
+from test_project.connect.models import Profile
 
 def test_index(request):
     context_dict = {
