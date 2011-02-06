@@ -45,7 +45,7 @@ class OAuthAccess(object):
         try:
             return self._obtain_setting("keys", "FACEBOOK_APP_ID")
         except KeyError:
-        	raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID in the keys dict")
+        	raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID in the keys dict")
     
     @property
     def secret(self):
@@ -55,7 +55,7 @@ class OAuthAccess(object):
         try:
         	return self._obtain_setting("keys", "FACEBOOK_APP_SECRET")
         except KeyError:
-        	raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET in the keys dict")
+        	raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET in the keys dict")
     
     @property
     # TODO:  OAuth 2.0 does not need a request token

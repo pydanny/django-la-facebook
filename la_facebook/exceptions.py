@@ -1,5 +1,4 @@
 class FacebookSettingsKeyError(KeyError):
-    pass
     """ Expect to see at least:
     
     FACEBOOK_ACCESS_SETTINGS = {
@@ -13,7 +12,8 @@ class FacebookSettingsKeyError(KeyError):
             # Probably too much power here - just need to have authentication
         }
     }  
-    """  
+    """ 
+    pass    
 
 class NotAuthorized(Exception):
     pass
