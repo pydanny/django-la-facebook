@@ -40,11 +40,17 @@ class OAuthAccess(object):
     
     @property
     def key(self):
-        return self._obtain_setting("keys", "KEY")
+        try:
+            return self._obtain_setting("keys", "FACEBOOK_APP_ID")
+        except KeyError:
+            raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID in the keys dict")
     
     @property
     def secret(self):
-        return self._obtain_setting("keys", "SECRET")
+        try:
+            return self._obtain_setting("keys", "FACEBOOK_APP_SECRET")
+        except KeyError:
+            raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET in the keys dict")
     
     @property
     # TODO:  OAuth 2.0 does not need a request token
@@ -58,8 +64,7 @@ class OAuthAccess(object):
             return self._obtain_setting("endpoints", "access_token")
         except KeyError:
             return "https://graph.facebook.com/oauth/access_token"
-
-    
+            
     @property
     def authorize_url(self):
         try:
@@ -76,10 +81,11 @@ class OAuthAccess(object):
     
     def _obtain_setting(self, k1, k2):
         name = "FACEBOOK_ACCESS_SETTINGS"
+        return getattr(settings, name)[k1][k2]        
+        """
+            TODO: Nuke this code?
         try:
-            return getattr(settings, name)[k1][k2]
-        except AttributeError:
-            raise ImproperlyConfigured("%s must be defined in settings" % (name,))
+            return getattr(settings, name)[k1][k2]        
         except KeyError, e:
             key = e.args[0]
             if key == k1:
@@ -88,6 +94,7 @@ class OAuthAccess(object):
                 raise ImproperlyConfigured("%s must contain '%s' for '%s'" % (name, k2, k1))
             else:
                 raise
+        """
     
     def unauthorized_token(self):
         if not hasattr(self, "_unauthorized_token"):

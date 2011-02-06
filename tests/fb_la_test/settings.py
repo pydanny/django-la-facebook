@@ -110,8 +110,8 @@ AUTH_PROFILE_MODULE="connect.Profile"
 
 FACEBOOK_ACCESS_SETTINGS = {
     "keys": {
-        "KEY": FACEBOOK_APP_ID,
-        "SECRET": FACEBOOK_APP_SECRET,
+        "FACEBOOK_APP_ID": FACEBOOK_APP_ID,
+        "FACEBOOK_APP_SECRET": FACEBOOK_APP_SECRET,
     },
     "endpoints": {
         # Will need to redo the following
