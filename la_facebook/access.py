@@ -47,15 +47,20 @@ class OAuthAccess(object):
             accessor for key setting
         """
         
-        return self._obtain_setting("keys", "KEY")
+        try:
+            return self._obtain_setting("keys", "FACEBOOK_APP_ID")
+        except KeyError:
+        	raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID in the keys dict")
     
     @property
     def secret(self):
         """
             accessor for secret setting
         """
-        
-        return self._obtain_setting("keys", "SECRET")
+        try:
+        	return self._obtain_setting("keys", "FACEBOOK_APP_SECRET")
+        except KeyError:
+        	raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET in the keys dict")
     
     @property
     # TODO:  OAuth 2.0 does not need a request token
@@ -73,7 +78,10 @@ class OAuthAccess(object):
             accessor for access_token setting
         """
         
-        return self._obtain_setting("endpoints", "access_token")
+        try:
+             return self._obtain_setting("endpoints", "access_token")
+        except KeyError:
+            return "https://graph.facebook.com/oauth/access_token"
     
     @property
     def authorize_url(self):
@@ -81,7 +89,10 @@ class OAuthAccess(object):
             accessor for authorize setting
         """
         
-        return self._obtain_setting("endpoints", "authorize")
+        try:
+            return self._obtain_setting("endpoints", "authorize")
+        except KeyError:
+            return "https://graph.facebook.com/oauth/authorize"
     
     @property
     def provider_scope(self):
