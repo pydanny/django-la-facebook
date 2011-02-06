@@ -35,7 +35,7 @@ class TestConnection(LaFacebookTestCase):
         print content      
         
         form_data = dict(
-            charset_test="&euro;,&acute;,€,´,水,Д,Є",
+            charset_test=unicode("&euro;,&acute;,\xe2,\xc2,\xd0,\xd0", "utf-8"),
             lsd="IuLli",
             next="http://www.facebook.com/connect/uiserver.php?method=permissions.request&amp;app_id=124397597633470&amp;display=page&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fafter&amp;response_type=code&amp;fbconnect=1&amp;perms=email%2Cread_stream&amp;from_login=1",
             api_key="124397597633470",
@@ -46,14 +46,14 @@ class TestConnection(LaFacebookTestCase):
             session_key_only="0",
             skip_api_login="1",
             trynum="1",
-            charset_test="&euro;,&acute;,€,´,水,Д,Є",
-            lsd="IuLli",
             email="",
-            pass="",
+            pass1="",
             persistent="1",
             default_persistent="0",
             Login="login"
         )
+        form_data["pass"] = form_data["pass1"]
+        del form_data["pass1"]
 
         
         resp, content = h.request(url, method="POST", body=form_data)  
