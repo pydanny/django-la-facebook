@@ -28,6 +28,12 @@ class PropertyTests(TestCase):
         expected_endpoint_url = "https://graph.facebook.com/oauth/authorize"
         self.assertEquals(authorize_url_endpoint,expected_endpoint_url)
     
+    def test_provider_scope(self):
+        oauth = OAuthAccess()
+        provider_scope_endpoint = oauth.provider_scope
+        expected_endpoint_url = None
+        self.assertEquals(provider_scope_endpoint,expected_endpoint_url)
+    
     def test_callback_url(self):
         oauth = OAuthAccess()
         callback_url = oauth.callback_url
