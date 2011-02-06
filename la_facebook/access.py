@@ -47,16 +47,25 @@ class OAuthAccess(object):
         return self._obtain_setting("keys", "SECRET")
     
     @property
+    # TODO:  OAuth 2.0 does not need a request token
+    # this func probably obsolete
     def request_token_url(self):
         return self._obtain_setting("endpoints", "request_token")
     
     @property
     def access_token_url(self):
-        return self._obtain_setting("endpoints", "access_token")
+        try:
+            return self._obtain_setting("endpoints", "access_token")
+        except KeyError:
+            return "https://graph.facebook.com/oauth/access_token"
+
     
     @property
     def authorize_url(self):
-        return self._obtain_setting("endpoints", "authorize")
+        try:
+            return self._obtain_setting("endpoints", "authorize")
+        except KeyError:
+            return "https://graph.facebook.com/oauth/authorize"
     
     @property
     def provider_scope(self):
