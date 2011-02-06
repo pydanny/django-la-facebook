@@ -197,7 +197,7 @@ class OAuthAccess(object):
             accessor for callback setting
         """
         try:
-            callback_str = settings.FACEBOOK_ACCESS_SETTINGS["FACEBOOK_APP_SECRET"]
+            callback_str = settings.FACEBOOK_ACCESS_SETTINGS["CALLBACK"]
         except KeyError:
             raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a CALLBACK entry")
         return load_path_attr(callback_str)

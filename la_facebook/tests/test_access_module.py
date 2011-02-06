@@ -46,5 +46,5 @@ class PropertyTests(TestCase):
     def test_callback(self):
         oauth = OAuthAccess()
         callback_endpoint = oauth.callback
-        expected_callback_endpoint = load_path_attr(oauth._obtain_setting("endpoints", "callback"))
+        expected_callback_endpoint = load_path_attr(settings.FACEBOOK_ACCESS_SETTINGS["CALLBACK"])
         self.assertEquals(callback_endpoint,expected_callback_endpoint)
