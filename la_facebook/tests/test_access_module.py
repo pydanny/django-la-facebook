@@ -9,6 +9,7 @@ class PropertyTests(TestCase):
         # test if there is a key
         oath = OAuthAccess()
         self.assertEquals(oath.key, "124397597633470")
+        #self.assertRaises(NameError, runt_this)
         
     def test_callback_url(self):
         
