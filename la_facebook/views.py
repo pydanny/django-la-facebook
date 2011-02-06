@@ -4,6 +4,7 @@ from django.template import RequestContext
 
 from la_facebook.access import OAuthAccess
 from la_facebook.exceptions import MissingToken
+from la_facebook import la_fb_logging
 
 
 def facebook_login(request, redirect_field_name="next",
@@ -24,12 +25,14 @@ def facebook_callback(request):
         auth_token = access.check_token(unauth_token, request.GET)
     except MissingToken:
         ctx.update({"error": "token_missing"})
+        logger.error('Missing Token')
     else:
         if auth_token:
             return access.callback(request, access, auth_token)
         else:
             # @@@ not nice for OAuth 2
             ctx.update({"error": "token_mismatch"})
+            logger.error('Mismathch Token')
     return render_to_response("la_facebook/fb_error.html", ctx)
 
 
