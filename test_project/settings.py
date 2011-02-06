@@ -4,8 +4,7 @@ import sys, os
 # We need the project's root in our Python Path. Let's add it
 test_project = os.path.dirname(__file__)
 test_directory = os.path.dirname(test_project)
-main_project = os.path.dirname(test_directory)
-sys.path.append(main_project)
+sys.path.append(test_directory)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -97,7 +96,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'fb_la_test.connect',
+    'test_project.connect',
     'la_facebook',
 )
 
