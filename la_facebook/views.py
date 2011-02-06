@@ -9,6 +9,13 @@ from la_facebook import la_fb_logging
 
 def facebook_login(request, redirect_field_name="next",
                         redirect_to_session_key="redirect_to"):
+    """
+        1. access OAuth
+        2. set token to none
+        3. store and redirect to authorization url
+        4. redirect to OAuth authorization url
+    """
+    
     access = OAuthAccess()
     token = None
     if hasattr(request, "session"):
@@ -17,6 +24,17 @@ def facebook_login(request, redirect_field_name="next",
 
 
 def facebook_callback(request):
+    """
+        1. define RequestContext
+        2. access OAuth
+        3. check session
+        4. autheticate token
+        5. raise exception if missing token
+        6. return access callback
+        7. raise exception if mismatch token
+        8. render error 
+    """
+    
     ctx = RequestContext(request)
     access = OAuthAccess()
     # TODO: Check to make sure the session cookie is setting correctly
@@ -32,10 +50,15 @@ def facebook_callback(request):
         else:
             # @@@ not nice for OAuth 2
             ctx.update({"error": "token_mismatch"})
-            logger.error('Mismathch Token')
+            logger.error('Mismatch Token')
     return render_to_response("la_facebook/fb_error.html", ctx)
 
 
 def finish_signup(request):
+    """
+        1. access OAuth
+        2. return callback url and finish signup
+    """
+    
     access = OAuthAccess()
     return access.callback.finish_signup(request)

@@ -28,6 +28,9 @@ logger = logging.getLogger("la_facebook.access")
 
 
 class OAuthAccess(object):
+    """
+        Authorize OAuth access
+    """
     
     def __init__(self):
         self.signature_method = oauth.SignatureMethod_HMAC_SHA1()
@@ -35,33 +38,52 @@ class OAuthAccess(object):
     
     @property
     def key(self):
+        """
+            accessor for key setting
+        """
+        
         try:
             return self._obtain_setting("keys", "FACEBOOK_APP_ID")
         except KeyError:
-            raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID in the keys dict")
+        	raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_ID in the keys dict")
     
     @property
     def secret(self):
+        """
+            accessor for secret setting
+        """
         try:
-            return self._obtain_setting("keys", "FACEBOOK_APP_SECRET")
+        	return self._obtain_setting("keys", "FACEBOOK_APP_SECRET")
         except KeyError:
-            raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET in the keys dict")
+        	raise ImproperlyConfigured("FACEBOOK_ACCESS_SETTINGS must have a FACEBOOK_APP_SECRET in the keys dict")
     
     @property
     # TODO:  OAuth 2.0 does not need a request token
     # this func probably obsolete
     def request_token_url(self):
+        """
+            accessor for request_token setting
+        """
+        
         return self._obtain_setting("endpoints", "request_token")
     
     @property
     def access_token_url(self):
+        """
+            accessor for access_token setting
+        """
+        
         try:
-            return self._obtain_setting("endpoints", "access_token")
+             return self._obtain_setting("endpoints", "access_token")
         except KeyError:
             return "https://graph.facebook.com/oauth/access_token"
-            
+    
     @property
     def authorize_url(self):
+        """
+            accessor for authorize setting
+        """
+        
         try:
             return self._obtain_setting("endpoints", "authorize")
         except KeyError:
@@ -69,12 +91,20 @@ class OAuthAccess(object):
     
     @property
     def provider_scope(self):
+        """
+            accessor for provider scope setting
+        """
+        
         try:
             return self._obtain_setting("endpoints", "provider_scope")
         except KeyError:
             return None
     
     def _obtain_setting(self, k1, k2):
+        """
+            accessor and error checking for obtaining facebook acess setting
+        """
+        
         name = "FACEBOOK_ACCESS_SETTINGS"
         return getattr(settings, name)[k1][k2]        
         """
@@ -92,11 +122,19 @@ class OAuthAccess(object):
         """
     
     def unauthorized_token(self):
+        """
+            This function may handle when a user does not authorize the app to access their facebook information.
+        """
+        #@TODO - Can we delete this?
         if not hasattr(self, "_unauthorized_token"):
             self._unauthorized_token = self.fetch_unauthorized_token()
         return self._unauthorized_token
     
     def fetch_unauthorized_token(self):
+        """
+            This function may further handle when a user does not authorize the app to access their facebook information.
+        """
+        #@TODO - Can we delete this too?
         parameters = {
             "oauth_callback": self.callback_url,
         }
@@ -116,6 +154,13 @@ class OAuthAccess(object):
     
     @property
     def callback_url(self):
+        """
+            current site id
+            grab base site url
+            grab callback url
+            return base and callback url
+        """
+        
         current_site = Site.objects.get(pk=settings.SITE_ID)
         # @@@ http fix
         base_url = "http://%s" % current_site.domain
@@ -123,6 +168,14 @@ class OAuthAccess(object):
         return "%s%s" % (base_url, callback_url)
     
     def authorized_token(self, token, verifier=None):
+        """
+            authorize token
+            verify OAuth
+            set OAuth client
+            post OAuth content
+            response not 200 raise unknown response
+            return OAuth token as string
+        """
         parameters = {}
         if verifier:
             parameters.update({
@@ -143,6 +196,12 @@ class OAuthAccess(object):
         return oauth.Token.from_string(content)
     
     def check_token(self, unauth_token, parameters):
+        """
+            check token
+            check to see if unauthorized token
+            if authorized token get code parameters
+            return OAuth token
+        """
         if unauth_token:
             token = oauth.Token.from_string(unauth_token)
             if token.key == parameters.get("oauth_token", "no_token"):
@@ -175,6 +234,9 @@ class OAuthAccess(object):
     
     @property
     def callback(self):
+        """
+            accessor for callback setting
+        """
         return load_path_attr(self._obtain_setting("endpoints", "callback"))
     
     def authorization_url(self, token=None):
