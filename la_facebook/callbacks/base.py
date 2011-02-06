@@ -47,9 +47,7 @@ class BaseFacebookCallback(object):
                     user = ret
             else:
                 ret = self.handle_unauthenticated_user(request, user, access, token, user_data)
-            if isinstance(ret, HttpResponse):
-                print '1'
-                print self.__dict__                
+            if isinstance(ret, HttpResponse):            
                 return ret
         else:
             authenticated = True
