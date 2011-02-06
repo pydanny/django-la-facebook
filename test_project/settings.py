@@ -110,6 +110,6 @@ AUTH_PROFILE_MODULE="connect.Profile"
 FACEBOOK_ACCESS_SETTINGS = {
         "FACEBOOK_APP_ID": FACEBOOK_APP_ID,
         "FACEBOOK_APP_SECRET": FACEBOOK_APP_SECRET,
-        "CALLBACK": "la_facebook.callbacks.default.default_facebook_callback",
+        # "CALLBACK": "la_facebook.callbacks.default.default_facebook_callback",
         # "PROVIDER_SCOPE": "email,read_stream" # here as sample - optional
 }

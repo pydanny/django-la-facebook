@@ -199,7 +199,8 @@ class OAuthAccess(object):
         try:
             callback_str = settings.FACEBOOK_ACCESS_SETTINGS["CALLBACK"]
         except KeyError:
-            raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a CALLBACK entry")
+            # raise FacebookSettingsKeyError("FACEBOOK_ACCESS_SETTINGS must have a CALLBACK entry")
+            callback_str = "la_facebook.callbacks.default.default_facebook_callback"
         return load_path_attr(callback_str)
     
     def authorization_url(self, token=None):
