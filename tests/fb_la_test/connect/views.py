@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render_to_response
-from la_facebook.models import UserAssociation
-import httplib2
-import json
+from fb_la_test.connect.models import Profile
 
 def test_index(request):
     context_dict = {
@@ -14,22 +12,14 @@ def test_index(request):
 def after(request):
     # Let's prove facebook's creepy stalker-ware is working
     # TODO: Needs a lot of validation
-    ua = UserAssociation.objects.get(user=request.user)
-    url = "https://graph.facebook.com/me?access_token=%s" % ua.token
-    h = httplib2.Http()
-    print url
-    resp, content = h.request(url)
+    context_dict = {}
     
-    profile_data = json.loads(content)
-    
-    print profile_data
-    if 'error' in profile_data:
-        context_dict = {
-            'error': profile_data['error'].get('message')
-        }
-    else:
-        context_dict = {
-            'name': profile_data['name']
-        }
+    if hasattr(request, 'user'):
+        context_dict['user'] = request.user
+        try:
+            context_dict['profile'] = request.user.get_profile()
+        except Profile.DoesNotExist:
+            pass
+        
     
     return render_to_response('after.html', context_dict)
