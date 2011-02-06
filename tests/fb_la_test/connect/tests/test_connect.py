@@ -16,8 +16,6 @@ class TestConnection(LaFacebookTestCase):
         h = httplib2.Http()
         resp, content = h.request(url, method="GET")
         
-        print url
-        
         form_data = dict(
             charset_test=unicode(r"&euro;,&acute;,\xe2,\xc2,\xd0,\xd0", "utf-8"),
             lsd="IuLli",
@@ -40,21 +38,11 @@ class TestConnection(LaFacebookTestCase):
         del form_data["pass1"]
 
         
-        resp, content = h.request("http://www.facebook.com/connect/uiserver.php", method="POST", body=form_data)
-        
-        print "*"*40
-        print "*"*40
-        print "*"*40                
-
-        
-        print resp
-        
-        print "*"*40
-        print "*"*40
-        print "*"*40                
-        
-        print content
-                  
+        self.assertRaises(TypeError, 
+                            h.request,
+                            "http://www.facebook.com/connect/uiserver.php",
+                            body=form_data
+        )
         
     def test_authentication_after_facebook_authentication(self):
         pass
