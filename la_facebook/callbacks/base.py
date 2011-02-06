@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 
 from django.conf import settings
 
+LA_FACEBOOK_PROFILE_PREFIX = 'fb-'
+FACEBOOK_GRAPH_TARGET = "https://graph.facebook.com/me"
+
 
 def get_default_redirect(request, fallback_url=settings.LOGIN_REDIRECT_URL, redirect_field_name="next", session_key_value="redirect_to"):
    """
@@ -30,7 +33,7 @@ def get_default_redirect(request, fallback_url=settings.LOGIN_REDIRECT_URL, redi
    return redirect_to
 
 
-class Callback(object):
+class BaseFacebookCallback(object):
     
     def __call__(self, request, access, token):
         if not request.user.is_authenticated():
@@ -58,77 +61,60 @@ class Callback(object):
         return redirect(redirect_to)
     
     def fetch_user_data(self, request, access, token):
-        raise NotImplementedError()
+        url = FACEBOOK_GRAPH_TARGET
+        return access.make_api_call("json", url, token)
     
     def lookup_user(self, request, access, user_data):
         return access.lookup_user(identifier=self.identifier_from_data(user_data))
     
     def redirect_url(self, request):
-        raise NotImplementedError()
-
-
-class FacebookCallback(Callback):
+        return get_default_redirect(request)
 
     def handle_no_user(self, request, access, token, user_data):
         return self.create_user(request, access, token, user_data)
-        
+
     def handle_unauthenticated_user(self, request, user, access, token, user_data):
         self.login_user(request, user)
         
-    def redirect_url(self, request):
-        return get_default_redirect(request)
-
     def update_profile_from_graph(self, request, access, token, profile):
-           user_data = self.fetch_user_data(request, access, token)
-           for k,v in user_data.items():
-               if k!='id' and hasattr(profile, k):
-                   setattr(profile, k, v)
-           return profile
-
+        user_data = self.fetch_user_data(request, access, token)
+        for k, v in user_data.items():
+            if k !='id' and hasattr(profile, k):
+                setattr(profile, k, v)
+        return profile 
+           
     def create_user(self, request, access, token, user_data):
-       identifier = self.identifier_from_data(user_data)
-       username = str(identifier)
-       if User.objects.filter(username=username).count():
-           user = User.objects.get(username=username)
-       else:
-           user = User(username=str(identifier))
-           user.set_unusable_password()
-           user.save()
+        identifier = self.identifier_from_data(user_data)
+        username = str(identifier)
+        if User.objects.filter(username=username).count():
+            user = User.objects.get(username=username)
+        else:
+            user = User(username=str(identifier))
+            user.set_unusable_password()
+            user.save()
 
-       # start Profile handling code
-       # start Profile handling code
-       # start Profile handling code          
-       if hasattr(settings, 'AUTH_PROFILE_MODULE'):
-           profile_model = get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
+        if hasattr(settings, 'AUTH_PROFILE_MODULE'):
+            profile_model = get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
 
-           profile, created = profile_model.objects.get_or_create(
-               user = user,
-           )
-           profile = self.update_profile_from_graph(request, access, token, profile)
-           profile.save()
+            profile, created = profile_model.objects.get_or_create(
+              user = user,
+            )
+            profile = self.update_profile_from_graph(request, access, token, profile)
+            profile.save()
 
-       else:
-           print "I Ain't making you a profile how about that"
-           # Do nothing because users have no site profile defined
-           # TODO - should we pass a warning message? Raise a SiteProfileNotAvailable error?
-           pass
+        else:
+            # Do nothing because users have no site profile defined
+            # TODO - should we pass a warning message? Raise a SiteProfileNotAvailable error?
+            pass                         
 
-       # end Profile handling code
-       # end Profile handling code
-       # end Profile handling code                            
-
-       self.login_user(request, user)
-       return user
-
-    def fetch_user_data(self, request, access, token):
-        url = "https://graph.facebook.com/me"
-        return access.make_api_call("json", url, token)
-
+            self.login_user(request, user)
+            return user         
+      
     def identifier_from_data(self, data):
         # @@@ currently this is being used to make/lookup users and we don't
         # want a clash between services. need to look into the more.
-        return "fb-%s" % data["id"]
-        
+        return LA_FACEBOOK_PROFILE_PREFIX + data["id"]
+
     def login_user(self, request, user):
         user.backend = "django.contrib.auth.backends.ModelBackend"
-        login(request, user)
+        login(request, user)               

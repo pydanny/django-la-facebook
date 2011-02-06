@@ -46,7 +46,7 @@ def facebook_callback(request):
         logger.error('Missing Token')
     else:
         if auth_token:
-            return access.callback(request, access, auth_token)
+            return access.callback()(request, access, auth_token)
         else:
             # @@@ not nice for OAuth 2
             ctx.update({"error": "token_mismatch"})
