@@ -114,5 +114,5 @@ FACEBOOK_ACCESS_SETTINGS = {
         "LOG_FILE": "/tmp/la_facebook.log",
         # The following keys are optional
         # "CALLBACK": "la_facebook.callbacks.default.default_facebook_callback",
-        # "PROVIDER_SCOPE": "email,read_stream" # here as sample - optional
+        #"PROVIDER_SCOPE": ['email','read_stream'], # here as sample - optional
 }
