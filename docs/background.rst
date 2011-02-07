@@ -2,7 +2,7 @@
 Background
 ==========
 
-This documents provides a quick overflow of the events involved in
+This documents provides a quick overview of the events involved in
 authenticating a user against facebook.
 
 Facebook has had various authentication methods in the past (Facebook Connect),
