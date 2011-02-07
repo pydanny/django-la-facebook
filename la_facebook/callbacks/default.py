@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from django.conf import settings
 
+from la_facebook.la_fb_logging import logger
 from la_facebook.callbacks.base import (BaseFacebookCallback, 
         get_default_redirect, FACEBOOK_GRAPH_TARGET)
 
@@ -30,6 +31,8 @@ class DefaultFacebookCallback(BaseFacebookCallback):
         for k, v in user_data.items():
             if k !='id' and hasattr(profile, k):
                 setattr(profile, k, v)
+                logger.debug("DefaultFacebookCallback.update_profile_from_graph"\
+                        ": updating profile %s to %s" % (k,v))
         return profile 
            
     def create_profile(self, request, access, token, user):
@@ -46,17 +49,25 @@ class DefaultFacebookCallback(BaseFacebookCallback):
         else:
             # Do nothing because users have no site profile defined
             # TODO - should we pass a warning message? Raise a SiteProfileNotAvailable error?
+            logger.warning("DefaultFacebookCallback.create_profile: unable to" \
+                    "create/update profile as no AUTH_PROFILE_MODULE setting" \
+                    "has been defined")
             pass
 
     def create_user(self, request, access, token, user_data):
         identifier = self.identifier_from_data(user_data)
         username = str(identifier)
         if User.objects.filter(username=username).count():
+            logger.warning("DefaultFacebookCallback.create_user: A user for" \
+                    "was already found, when asked to create a user for %s" 
+                    % username)
             user = User.objects.get(username=username)
         else:
             user = User(username=str(identifier))
             user.set_unusable_password()
             user.save()
+            logger.debug("DefaultFacebookCallback.create_user: new django" \
+                    "user created for %s" % username)
 
         self.create_profile(request, access, token, user)
 

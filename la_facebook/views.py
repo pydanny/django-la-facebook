@@ -19,7 +19,7 @@ def facebook_login(request, redirect_field_name="next",
     access = OAuthAccess()
     token = None
     if hasattr(request, "session"):
-        logger.debug("facebook_login view: request has session")
+        logger.debug("la_facebook.views.facebook_login: request has session")
         request.session[redirect_to_session_key] = request.GET.get(redirect_field_name)
     return HttpResponseRedirect(access.authorization_url(token))
 
@@ -44,14 +44,15 @@ def facebook_callback(request):
         auth_token = access.check_token(unauth_token, request.GET)
     except MissingToken:
         ctx.update({"error": "token_missing"})
-        logger.error('Missing Token')
+        logger.error('la_facebook.views.facebook_login: missing token')
     else:
         if auth_token:
             return access.callback(request, access, auth_token)
         else:
             # @@@ not nice for OAuth 2
             ctx.update({"error": "token_mismatch"})
-            logger.error('Mismatch Token')
+            logger.error('la_facebook.views.facebook_callback: token mismatch'\
+                    ', error getting token, or user denied FB login')
     return render_to_response("la_facebook/fb_error.html", ctx)
 
 
