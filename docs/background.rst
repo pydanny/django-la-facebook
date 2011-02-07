@@ -35,6 +35,7 @@ publicly available about the user on Facebook. (for additional permissions, see
 the documentation for settings). The permissions approved will be global to all
 your Django apps in your Django project.
 
-Once your site is authenticated, a Facebook token is stored in a model
-associated with a Django. That user that will then be the current authenticated
-Django user for subsequent requests.
+Once your site is authorized by Facebook, an authorization token is stored in
+a model associated with a Django user (which by default is created if needed).
+That user that will then be the authenticated user for subsequent requests
+(request.user).
