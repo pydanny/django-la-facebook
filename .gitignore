@@ -2,4 +2,4 @@ MANIFEST
 dist
 *pyc
 lafbenv/
-tests/fb_la_test/dummy
+test_project/dummy
