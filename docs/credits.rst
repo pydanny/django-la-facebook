@@ -9,6 +9,7 @@ django-la-facebook team
 * Daniel Greenfeld
 * David Peters
 * Jacob Burch
+* Preston Holmes
 
 django-oauth-access team
 ------------------------
