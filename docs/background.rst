@@ -7,10 +7,10 @@ authenticating a user against facebook.
 
 Facebook has had various authentication methods in the past (Facebook Connect),
 but has currently standardized on using `OAuth 2 Protocol
-<http://tools.ietf.org/pdf/draft-ietf-oauth-v2-12.pdf>`.
+<http://tools.ietf.org/pdf/draft-ietf-oauth-v2-12.pdf>`_.
 
 Facebook's `own documentation
-<http://developers.facebook.com/docs/authentication>` does a reasonable job of
+<http://developers.facebook.com/docs/authentication>`_ does a reasonable job of
 explaining the process, but it is summarized here. Facebook offers two
 workflows for user authentication, client (javascript) based, and server side.
 This project aims to provide a Python based, server side option.
@@ -25,7 +25,7 @@ Facebook will only authenticate a user in relation to a specific app, there is
 no "just authorize the user" option. In our case, the "app" that is
 authenticated is your entire Django project or site, not a specific Django app.
 For Facebook to associate your site with the authentication, you will need an
-app ID from `Facebook's Developer app <http://www.facebook.com/developers>`,
+app ID from `Facebook's Developer app <http://www.facebook.com/developers>`_,
 which is placed in your Django settings file.
 
 A user is authenticated to facebook, and your app in one step.  The first time

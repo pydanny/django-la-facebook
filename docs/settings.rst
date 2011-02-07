@@ -11,14 +11,14 @@ FACEBOOK_APP_ID - this is a key that uniquely identifies your Facebook app, in
 the common case, the Facebook app will be your project or site.  
 
 FACEBOOK_APP_SECRET - This secret is used in generating the authenticated
-token.  Both the key and the secret are available through the `Facebook's Developer app <http://www.facebook.com/developers>`.
+token.  Both the key and the secret are available through the `Facebook's Developer app <http://www.facebook.com/developers>`_.
 
 CALLBACK (optional) - this is a dotted module path string (similar to using a string for
 a view) that points to a subclass of la_facebook.callbacks.default. The default
 value is "la_facebook.callbacks.default.default_facebook_callback"
 
 PROVIDER_SCOPE (optional) - a comma delimited string of permissions to ask for.
-The list of these is `here <http://developers.facebook.com/docs/authentication/permissions/>`
+The list of these is `here <http://developers.facebook.com/docs/authentication/permissions/>_`
 
 Example::
     

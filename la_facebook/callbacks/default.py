@@ -1,4 +1,11 @@
-from la_facebook.callbacks.base import BaseFacebookCallback, get_default_redirect
+from django.db.models import get_model
+
+from django.contrib.auth.models import User
+
+from django.conf import settings
+
+from la_facebook.callbacks.base import (BaseFacebookCallback, 
+        get_default_redirect, FACEBOOK_GRAPH_TARGET)
 
 class DefaultFacebookCallback(BaseFacebookCallback):
     
