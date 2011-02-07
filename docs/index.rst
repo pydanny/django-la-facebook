@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
    
    usage
+   settings
    test_project   
    background
    goals
