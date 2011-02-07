@@ -18,7 +18,7 @@ a view) that points to a subclass of la_facebook.callbacks.default. The default
 value is "la_facebook.callbacks.default.default_facebook_callback"
 
 PROVIDER_SCOPE (optional) - a list, of strings, of permissions to ask for.
-The list of these is `here <http://developers.facebook.com/docs/authentication/permissions/>_`
+The list of these is `here <http://developers.facebook.com/docs/authentication/permissions/>`_
 
 LOG_LEVEL (optional) - A string value containing one of standard python logging
 levels of DEBUG, INFO, WARNING, ERROR or CRITICAL. Defaults to "ERROR", which 
