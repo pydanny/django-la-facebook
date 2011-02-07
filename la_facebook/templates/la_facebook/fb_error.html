@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Facebook Error</title>
+</head>
+<body>
+    <h1>Facebook Error</h1>
+    {% if error %}
+        <p>OAuth Error: {{error}}</p>
+    {% endif %}
+    {% if fb_error %}
+        <p>Facebook Error: {{fb_error}}</p>
+    {% endif %}
+    {% if fb_error_reason%}
+        <p>Reason: {{fb_error_reason}}</p>
+    {% endif %}
+    {% if fb_error_description %}
+        <p>Description: {{fb_error_description}}</p>
+    {% endif %}
+</body>
+</html>
+

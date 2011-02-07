@@ -53,6 +53,18 @@ def facebook_callback(request):
             ctx.update({"error": "token_mismatch"})
             logger.error('la_facebook.views.facebook_callback: token mismatch'\
                     ', error getting token, or user denied FB login')
+    try:
+        ctx.update({
+            "fb_error":request.GET['error'],
+            "fb_error_description":request.GET['error_description'],
+            "fb_error_reason":request.GET['error_reason']
+            })
+        logger.warning('la_facebook.views.facebook_callback: %s, %s' 
+                % (ctx['fb_error'], ctx['fb_error_reason']))
+    except:
+        # TODO - greedy exception is to prevent errors if FB changes error
+        # params
+        pass
     return render_to_response("la_facebook/fb_error.html", ctx)
 
 
