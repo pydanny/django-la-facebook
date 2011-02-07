@@ -4,7 +4,7 @@ from django.template import RequestContext
 
 from la_facebook.access import OAuthAccess
 from la_facebook.exceptions import MissingToken
-from la_facebook import la_fb_logging
+from la_facebook.la_fb_logging import logger
 
 
 def facebook_login(request, redirect_field_name="next",
@@ -19,6 +19,7 @@ def facebook_login(request, redirect_field_name="next",
     access = OAuthAccess()
     token = None
     if hasattr(request, "session"):
+        logger.debug("facebook_login view: request has session")
         request.session[redirect_to_session_key] = request.GET.get(redirect_field_name)
     return HttpResponseRedirect(access.authorization_url(token))
 

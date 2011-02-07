@@ -20,6 +20,13 @@ value is "la_facebook.callbacks.default.default_facebook_callback"
 PROVIDER_SCOPE (optional) - a comma delimited string of permissions to ask for.
 The list of these is `here <http://developers.facebook.com/docs/authentication/permissions/>_`
 
+LOG_LEVEL (optional) - A string value containing one of standard python logging
+levels of DEBUG, INFO, WARNING, ERROR or CRITICAL. Defaults to "ERROR", which 
+should be relatively quiet.
+
+LOG_FILE (optional) - The path to a file that will received appended logging 
+information.  By default, logged messages will print to stdout.
+
 Example::
     
     FACEBOOK_ACCESS_SETTINGS = {
@@ -27,5 +34,7 @@ Example::
             "FACEBOOK_APP_SECRET": FACEBOOK_APP_SECRET,
             # The following keys are optional
             # "CALLBACK": "la_facebook.callbacks.default.default_facebook_callback",
-            # "PROVIDER_SCOPE": "email,read_stream" # here as sample - optional
+            # "PROVIDER_SCOPE": "email,read_stream",
+            # "LOG_LEVEL": "DEBUG",
+            # "LOG_FILE": "/tmp/la_facebook.log",
     }

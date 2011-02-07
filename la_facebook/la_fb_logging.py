@@ -2,13 +2,23 @@ import logging
 import sys
 from django.conf import settings
 
-LOG_FILE = getattr(settings, 'FACEBOOK_LOG_FILE', '/tmp/fb_logging.log')
-
 logger = logging.getLogger("la_fb")
-logger.setLevel(logging.DEBUG)
-
-handler = logging.StreamHandler(sys.stdout)
-
-logger.addHandler(handler)
 
 
+try:
+    log_level = settings.FACEBOOK_ACCESS_SETTINGS['LOG_LEVEL']
+except (KeyError, AttributeError):
+    log_level = 'CRITICAL'
+
+log_level = log_level.upper() #just to catch mistakenly entered lowercase
+if hasattr(logging, log_level):
+    logger.setLevel(getattr(logging, log_level))
+
+# TODO: should we always log to console, doesn't seem worth another setting
+logger.addHandler(logging.StreamHandler(sys.stdout))
+
+try:
+    log_file = settings.FACEBOOK_ACCESS_SETTINGS['LOG_FILE']
+    logger.addHandler(logging.FileHandler(log_file))
+except (KeyError, AttributeError):
+    pass
