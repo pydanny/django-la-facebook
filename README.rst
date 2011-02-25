@@ -14,4 +14,4 @@ Full Documentation:
 
 Note: This is the old development fork. Work is now happening at:
 
-    https://github.com/cartwheelweb.com/django-la-facebook
+    https://github.com/cartwheelweb/django-la-facebook
